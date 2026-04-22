@@ -1,8 +1,5 @@
 <?php
-/**
- * Catat aktivitas ke system_log
- * Panggil: log_activity($conn, $_SESSION['id_user'], 'PROMO', 'CREATE', 'Membuat promo Diskon 10%');
- */
+
 function log_activity($conn, $id_user, $modul, $aksi, $deskripsi) {
     $ip  = mysqli_real_escape_string($conn, $_SERVER['REMOTE_ADDR'] ?? '');
     $mod = mysqli_real_escape_string($conn, strtoupper($modul));
