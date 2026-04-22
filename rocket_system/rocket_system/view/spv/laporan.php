@@ -6,7 +6,7 @@ $pageTitle = 'Generate Laporan';
 $msg = $msgType = '';
 $id_spv = (int)$_SESSION['id_user'];
 
-// ── EXPORT ───────────────────────────────────────────────────
+
 if (isset($_GET['export'], $_GET['id'])) {
     $id_lap = (int)$_GET['id'];
     $lap = mysqli_fetch_assoc(mysqli_query($conn,
@@ -91,7 +91,7 @@ if (isset($_GET['export'], $_GET['id'])) {
     }
 }
 
-// ── PROCESS FORM ─────────────────────────────────────────────
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jenis      = $_POST['jenis']      ?? 'KEUANGAN';
     $periode    = trim($_POST['periode']    ?? '');
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tgl_sampai = trim($_POST['tgl_sampai'] ?? '');
     $finalize   = isset($_POST['finalize']) ? 'FINAL' : 'DRAFT';
 
-    // Tentukan filter & label periode
+   
     $dateFilter   = '';
     $periodeLabel = $periode;
 
@@ -120,20 +120,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $totalPenjualan = 0; $totalReturn = 0; $totalPengeluaran = 0;
-    $stokSnapshot = []; // untuk laporan STOK
+    $stokSnapshot = []; 
 
     if ($jenis === 'STOK') {
-        // Laporan stok: ambil data stok saat ini + log pergerakan pada periode
+        
         $stokRows = mysqli_query($conn, "SELECT * FROM stok ORDER BY nama_bahan");
         while($s = mysqli_fetch_assoc($stokRows)) $stokSnapshot[] = $s;
-        // Hitung total pengeluaran stok (keluar) pada periode sebagai estimasi
+        
         if($dateFilter) {
             $rKeluar = mysqli_fetch_assoc(mysqli_query($conn,
                 "SELECT IFNULL(SUM(ABS(perubahan)),0) s FROM stok_log WHERE jenis='KELUAR' AND $dateFilter"));
             $totalPengeluaran = (float)$rKeluar['s'];
             $rMasuk = mysqli_fetch_assoc(mysqli_query($conn,
                 "SELECT IFNULL(SUM(perubahan),0) s FROM stok_log WHERE jenis='MASUK' AND $dateFilter"));
-            $totalPenjualan = (float)$rMasuk['s']; // pakai field ini utk "total masuk"
+            $totalPenjualan = (float)$rMasuk['s']; 
         }
     } elseif ($dateFilter) {
         $r = mysqli_fetch_assoc(mysqli_query($conn,
@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($jenis === 'STOK') {
-        $labaRugi = $totalPenjualan - $totalPengeluaran; // masuk - keluar stok
+        $labaRugi = $totalPenjualan - $totalPengeluaran; 
     } else {
         $labaRugi = $totalPenjualan - $totalReturn;
     }
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $msgType = 'success';
 }
 
-// ── DATA ─────────────────────────────────────────────────────
+
 $laporanList = mysqli_query($conn,
     "SELECT l.*, u.nama spv FROM laporan l
      JOIN users u ON l.id_spv=u.id_user
