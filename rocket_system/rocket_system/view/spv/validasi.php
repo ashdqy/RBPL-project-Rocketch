@@ -6,17 +6,17 @@ $pageTitle = 'Validasi Laporan';
 $msg = $msgType = '';
 $id_validator = (int)$_SESSION['id_user'];
 
-// ── KIRIM KE VALIDASI (dari laporan.php) ─────────────────────
+
 if (isset($_GET['submit'])) {
     $sid = (int)$_GET['submit'];
     mysqli_query($conn,"UPDATE laporan SET status='DRAFT' WHERE id_laporan=$sid AND id_spv=$id_validator");
     $msg = 'Laporan berhasil dikirim untuk divalidasi.'; $msgType = 'success';
 }
 
-// ── AKSI VALIDASI ─────────────────────────────────────────────
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aksi'])) {
     $id_lap  = (int)$_POST['id_laporan'];
-    $aksi    = $_POST['aksi']; // APPROVE / REJECT / REVISI
+    $aksi    = $_POST['aksi']; 
     $catatan = trim($_POST['catatan'] ?? '');
 
     $statusMap = ['APPROVE' => 'FINAL', 'REJECT' => 'REJECTED', 'REVISI' => 'REVISI'];
