@@ -6,7 +6,7 @@ $pageTitle = 'Kelola Promo';
 $msg = $msgType = '';
 $id_admin = (int)$_SESSION['id_user'];
 
-// ── HAPUS ────────────────────────────────────────────────────
+// ── HAPUS 
 if (isset($_GET['delete'])) {
     $did = (int)$_GET['delete'];
     $row = mysqli_fetch_assoc(mysqli_query($conn,"SELECT nama_promo FROM promo WHERE id_promo=$did"));
@@ -17,7 +17,7 @@ if (isset($_GET['delete'])) {
     }
 }
 
-// ── TOGGLE AKTIF ─────────────────────────────────────────────
+// ── AKKTIF
 if (isset($_GET['toggle'])) {
     $tid = (int)$_GET['toggle'];
     $row = mysqli_fetch_assoc(mysqli_query($conn,"SELECT nama_promo,is_active FROM promo WHERE id_promo=$tid"));
@@ -31,7 +31,7 @@ if (isset($_GET['toggle'])) {
     }
 }
 
-// ── SAVE ─────────────────────────────────────────────────────
+// ── SAVE 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_edit     = (int)($_POST['id_promo'] ?? 0);
     $nama        = mysqli_real_escape_string($conn, trim($_POST['nama_promo']    ?? ''));
@@ -65,14 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// ── EDIT MODE ────────────────────────────────────────────────
+// EDIT MODE 
 $editData = null;
 if (isset($_GET['edit'])) {
     $editData = mysqli_fetch_assoc(mysqli_query($conn,
         "SELECT * FROM promo WHERE id_promo=".(int)$_GET['edit']));
 }
 
-// ── DATA ─────────────────────────────────────────────────────
+// DATA 
 $promoList = mysqli_query($conn,
     "SELECT p.*, m.nama_menu, u.nama dibuat_nama
      FROM promo p
@@ -81,7 +81,7 @@ $promoList = mysqli_query($conn,
      ORDER BY p.created_at DESC");
 
 $menuList = mysqli_query($conn,"SELECT id_menu,nama_menu FROM menu WHERE is_active=1 ORDER BY nama_menu");
-// Reset pointer untuk form edit
+
 $menuArr = [];
 while ($m = mysqli_fetch_assoc($menuList)) $menuArr[] = $m;
 
@@ -109,7 +109,7 @@ include __DIR__ . '/../../includes/layout_start.php';
 <?php endif; ?>
 
 <div class="row g-3">
-  <!-- Form -->
+  
   <div class="col-lg-4">
     <div class="card-box">
       <div class="c-head">
