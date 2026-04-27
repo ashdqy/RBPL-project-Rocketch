@@ -1,5 +1,5 @@
 <?php
-$host     = 'sql390.infinityfree.com';
+$host     = 'sql309.infinityfree.com';
 $dbname   = 'if0_41770489_rocket2';
 $user     = 'if0_41770489';
 $password = 'rocketchsystem';
