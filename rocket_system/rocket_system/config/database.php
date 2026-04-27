@@ -1,9 +1,8 @@
 <?php
-$host     = 'localhost';
-$dbname   = 'rocket2';
-$user     = 'root';
-$password = '';
-
+$host     = 'sql.infinityfree.com';
+$dbname   = 'if0_41770489_rocket2';
+$user     = 'if0_41770489';
+$password = 'rocketchsystem';
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
 if (!$conn) {
